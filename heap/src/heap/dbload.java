@@ -7,7 +7,7 @@ public class dbload {
 	public static void main(String[] args) {
 		HMethods hm = new HMethods();
 		boolean correct_input = hm.input_validation(args);
-		
+		System.out.println(correct_input);
 		// Heap does not need Header (containing things like the # of Records in the File or Free Space List
 		// Might need to keep a count of Records in each Page
 		// File should be packed, i.e. no gap between records
