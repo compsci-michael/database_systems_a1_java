@@ -1,10 +1,34 @@
-package heap;  
+package heap;
+
+import java.util.HashMap;
 
 public class HMethods {
+	// Some Values
 	public static int P_FLAG = 0;
 	public static int PAGE_SIZE_FLAG = 1;
 	public static int DATA_FLAG = 2;
 	public static int INT_BYTE_SIZE = 4;
+	
+	public static int CENSUS_YR = 0;
+	public static int BLOCK_ID = 1;
+	public static int PROP_ID = 2;
+	public static int BASE_PROP_ID = 3;
+	public static int BUILDING_NAME = 4;
+	public static int STREET_ADDRESS = 5;
+	public static int SUBURB= 6;
+	public static int CONSTRUCT_YR = 7;
+	public static int REFURBISHED_YR = 8;
+	public static int NUM_FLOORS = 9;
+	public static int SPACE_USAGE = 10;
+	public static int ACCESS_TYPE = 11;
+	public static int ACCESS_DESC = 12;
+	public static int ACCESS_RATING = 13;
+	public static int BICYCLE_SPACES = 14;
+	public static int HAS_SHOWERS = 15;
+	public static int X_COOR = 16;
+	public static int Y_COOR = 17;
+	public static int LOCATION = 18;
+	
 	
 	// Method to Validate the Input Arguements
 	public boolean input_validation(String[] args) {
@@ -48,17 +72,12 @@ public class HMethods {
 		return Integer.parseInt(args[PAGE_SIZE_FLAG].trim());
 	}
 	
-	/*
-	int integer = 12392412;
-	byte[] conv = new byte[4];
-	conv[3] = (byte) ((byte) integer & 0xff);
-	integer >>= 8;
-	conv[2] = (byte) ((byte) integer & 0xff);
-	integer >>= 8;
-	conv[1] = (byte) ((byte) integer & 0xff);
-	integer >>= 8;
-	conv[0] = (byte) integer; 
-	*/
+	// Method to Print out Contents of HashMap
+	public void print_hash_map(HashMap<String, Record> data) {
+		for (String key : data.keySet()) {
+			data.get(key).record_display();
+		}
+	}
 	
 	// Method to Convert 4 Byte Array to Binary Representation
 	public String byte_to_bit(byte[] b) {
@@ -79,5 +98,50 @@ public class HMethods {
 			result[i] = s.charAt(i);
 		}
 		return result;
+	}
+	
+	// Method to Create a Record
+	public Record create_record(String[] data, int line_number) {
+		Record new_record = new Record();
+		boolean record_failed = false;
+		try {
+			// Do NULL Checks are Replace them with Integer.MAX_VALUE
+			if(data[CONSTRUCT_YR].equals("")) data[CONSTRUCT_YR] = Integer.toString(Integer.MAX_VALUE);
+			if(data[REFURBISHED_YR].equals("")) data[REFURBISHED_YR] = Integer.toString(Integer.MAX_VALUE);
+			if(data[ACCESS_RATING].equals(""))data[ACCESS_RATING] = Integer.toString(Integer.MAX_VALUE);
+			if(data[BICYCLE_SPACES].equals("")) data[BICYCLE_SPACES] = Integer.toString(Integer.MAX_VALUE);
+			if(data[HAS_SHOWERS].equals("")) data[HAS_SHOWERS] = Integer.toString(Integer.MAX_VALUE);
+			if(data[X_COOR].equals("")) data[X_COOR] = Integer.toString(Integer.MAX_VALUE);
+			if(data[Y_COOR].equals("")) data[Y_COOR] = Integer.toString(Integer.MAX_VALUE);
+
+			new_record.set_census_yr(Integer.parseInt(data[CENSUS_YR].trim()));
+			new_record.set_block_id(Integer.parseInt(data[BLOCK_ID].trim()));
+			new_record.set_prop_id(Integer.parseInt(data[PROP_ID].trim()));
+			new_record.set_base_prop_id(Integer.parseInt(data[BASE_PROP_ID].trim()));
+			new_record.set_construct_yr(Integer.parseInt(data[CONSTRUCT_YR].trim()));
+			new_record.set_refurbished_yr(Integer.parseInt(data[REFURBISHED_YR].trim()));
+			new_record.set_num_floors(Integer.parseInt(data[NUM_FLOORS].trim()));
+			new_record.set_access_rating(Integer.parseInt(data[ACCESS_RATING].trim()));
+			new_record.set_bicycle_spaces(Integer.parseInt(data[BICYCLE_SPACES].trim()));
+			new_record.set_has_showers(Integer.parseInt(data[HAS_SHOWERS].trim()));
+			new_record.set_x_coor(Double.parseDouble(data[X_COOR].trim()));
+			new_record.set_y_coor(Double.parseDouble(data[Y_COOR].trim()));
+		} catch(NumberFormatException nfe) {
+			System.err.println("Error - Record Discarded "
+		      		+ "- Record Contained Non-Numerical Value at Line: "+line_number+"! ");
+			record_failed = true;
+		}
+		if(record_failed) {
+			return null;
+		} else {
+			new_record.set_building_name(data[BUILDING_NAME]);
+			new_record.set_street_address(data[STREET_ADDRESS]);
+			new_record.set_suburb(data[SUBURB]);
+			new_record.set_space_usage(data[SPACE_USAGE]);
+			new_record.set_access_type(data[ACCESS_TYPE]);
+			new_record.set_access_desc(data[ACCESS_DESC]);
+			new_record.set_location(data[LOCATION]);
+			return new_record;
+		}
 	}
 }

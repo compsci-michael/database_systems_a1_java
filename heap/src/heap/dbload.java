@@ -24,6 +24,8 @@ public class dbload {
 		int record_counter = 0;
 		boolean data_read_failed = false;
 		HashMap<String, Record> data = new HashMap<String, Record>();
+		HashMap<String, Page> page_data = new HashMap<String, Page>();
+		
 		// Step 1: Validate the Input
 		boolean correct_input = hm.input_validation(args);
 		if(correct_input) {
@@ -37,6 +39,7 @@ public class dbload {
 				input_stream = new Scanner(new FileReader(args[hm.DATA_FLAG]));
 				// Removing Data Headers from File
 				String[] data_headers = input_stream.nextLine().split(",");
+				int line_number = 2;
 				
 				// Reading in data Line by Line
 				while (input_stream.hasNextLine()) {
@@ -81,18 +84,15 @@ public class dbload {
 						data_formatted[format_counter++] = "";
 					}
 					
-					for(int i=0; i<data_formatted.length; i++) {
-						if(data_formatted[i].equals("")) {
-							System.out.print("NULL$");
-						} else {
-							System.out.print(data_formatted[i]+"$");
-						}
+					// After Successfully Splitting the Data, Store It in a Record
+					Record new_record;
+					new_record = hm.create_record(data_formatted, line_number);
+					if(new_record != null) {
+						data.put(Integer.toString(line_number), new_record);
 					}
-					System.out.println();
-					//Record new_record;
-					
+					line_number++;
 				}
-				System.out.println("System - Loading File "+args[hm.DATA_FLAG]+" was Successful!");
+				System.out.println("System - "+args[hm.DATA_FLAG]+" was Successful Loaded!");
 			}
 			// Catching IOException error
 			catch (IOException e) {
@@ -104,6 +104,34 @@ public class dbload {
 				if (input_stream != null)
 					input_stream.close();
 			}
+			
+			// Step 3: Store Store the Records in Slots and Move them to Pages
+			int page_counter = 1;
+			Page new_page = new Page(page_size);
+			for (String key : data.keySet()) {
+				if(!new_page.is_page_is_full()) {
+					// This grabs the Record and Places it in a Slot in the Page
+					new_page.set_a_page_slot(data.get(key));
+				} else {
+					// If the Page is Full, store it in the HashMap and then re-initalise
+					page_data.put(Integer.toString(page_counter++),new_page);
+					new_page = new Page(page_size);
+				}
+			}
+			
+			if(new_page != new Page(page_size)) {
+				page_data.put(Integer.toString(page_counter++),new_page);
+			}
+			
+			int page_counter_2 = 1;
+			for (String key : page_data.keySet()) {
+				System.out.println("Page Number: "+page_counter_2++);
+				for(int i=0; i<page_data.get(key).number_of_records_in_page; i++) {
+					page_data.get(key).get_page_slot_record(i).record_display_simple();
+				}
+			}
+			
+			//hm.print_hash_map(data);
 			
 			
 			
