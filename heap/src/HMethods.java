@@ -1,3 +1,4 @@
+import java.io.OutputStream;
 import java.util.HashMap;
 
 public class HMethods {
@@ -141,5 +142,9 @@ public class HMethods {
 			new_record.set_location(data[LOCATION]);
 			return new_record;
 		}
+	}
+	
+	public void write_to_heap(OutputStream heap) {
+		
 	}
 }

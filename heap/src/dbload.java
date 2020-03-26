@@ -1,5 +1,7 @@
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -131,17 +133,27 @@ public class dbload {
 			
 				//hm.print_hash_map(data);	
 				
+				OutputStream binary_out = null;
 				final long heap_write_start_time = System.nanoTime();
-	
-				final long full_end_time = System.nanoTime();
-				final long heap_write_end_time = System.nanoTime();
-	
-				System.out.println("System - Number of Records Loaded: "+data.size());
-				System.out.println("System - Number of Pages Used: "+page_data.size());
-				System.out.println("System - Time Taken to Execute Script: "+
-				(float)(full_end_time-full_start_time)/1000000000+" seconds");
-				System.out.println("System - Time Taken to Write to Heap: "+ 
-				(heap_write_end_time-heap_write_start_time)/1000000000+" seconds");
+				
+				try {
+					binary_out = new FileOutputStream("heap."+Integer.toString(page_size));
+					hm.write_to_heap(binary_out);
+					
+					final long full_end_time = System.nanoTime();
+					final long heap_write_end_time = System.nanoTime();
+					
+					// Required Outputs
+					System.out.println("System - Number of Records Loaded: "+data.size());
+					System.out.println("System - Number of Pages Used: "+page_data.size());
+					System.out.println("System - Time Taken to Execute Script: "+
+					(float)(full_end_time-full_start_time)/1000000000+" seconds");
+					System.out.println("System - Time Taken to Write to Heap: "+ 
+					(heap_write_end_time-heap_write_start_time)/1000000000+" seconds");
+				
+				} catch (IOException ex) {
+					System.err.println("Error - Could Not Create The Heap File!");
+				}
 			}
 		}
 	}
