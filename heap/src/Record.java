@@ -1,5 +1,3 @@
-package heap;
-
 //0: census_yr, 1: block_id, 2: prop_id, 3: base_prop_id, 
 //4:building_name, 5: stree_address, 6: suburb, 7: construct_yr,
 //8: refurbished_year, 9: num_floors, 10: space_usage, 11: access_type,

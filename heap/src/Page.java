@@ -1,5 +1,3 @@
-package heap;
-
 public class Page {
 	public static int MAX_RECORDS = 10;
 	int number_of_records_in_page;

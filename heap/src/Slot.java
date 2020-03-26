@@ -1,5 +1,3 @@
-package heap;
-
 public class Slot {
 	Record record;
 	

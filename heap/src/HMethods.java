@@ -1,5 +1,3 @@
-package heap;
-
 import java.util.HashMap;
 
 public class HMethods {
