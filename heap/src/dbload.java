@@ -101,51 +101,48 @@ public class dbload {
 			finally {
 				if (input_stream != null)
 					input_stream.close();
-			}
-			
-			// Step 3: Store Store the Records in Slots and Move them to Pages
-			int page_counter = 0;
-			Page new_page = new Page(page_size);
-			for (String key : data.keySet()) {
-				if(!new_page.is_page_is_full()) {
+			}		
+
+			if(!data_read_failed) {
+				// Step 3: Store Store the Records in Slots and Move them to Pages
+				int page_counter = 0;
+				Page new_page = new Page(page_size);
+				for (String key : data.keySet()) {
 					// This grabs the Record and Places it in a Slot in the Page
 					new_page.set_a_page_slot(data.get(key));
-				} else {
-					// If the Page is Full, store it in the HashMap and then re-initalise
-					page_data.put(Integer.toString(page_counter++),new_page);
-					System.out.println(page_counter);
-					new_page = new Page(page_size);
+					if(new_page.is_page_is_full()) {
+						page_data.put(Integer.toString(page_counter++),new_page);
+						new_page = new Page(page_size);
+					}
 				}
-			}
-			
-			if(new_page != new Page(page_size)) {
-				page_data.put(Integer.toString(page_counter++),new_page);
-			}
-			
-			int page_counter_2 = 1;
-			for (String key : page_data.keySet()) {
-				//System.out.println("Page Number: "+page_counter_2++ +" Num Records: "+page_data.get(key).get_number_of_records_in_page());
+				if(new_page != new Page(page_size)) {
+					page_data.put(Integer.toString(page_counter++),new_page);
+				}
 				
-				//for(int i=0; i<page_data.get(key).number_of_records_in_page; i++) {
-				//	page_data.get(key).get_page_slot_record(i).record_display_simple();
-				//}
+				/*
+				int page_counter_2 = 1;
+				for (String key : page_data.keySet()) {
+					System.out.println("Page Number: "+page_counter_2++ +" Num Records: "+page_data.get(key).get_number_of_records_in_page());
+					for(int i=0; i<page_data.get(key).number_of_records_in_page; i++) {
+						page_data.get(key).get_page_slot_record(i).record_display_simple();
+					}
+				}
+				*/
+			
+				//hm.print_hash_map(data);	
 				
+				final long heap_write_start_time = System.nanoTime();
+	
+				final long full_end_time = System.nanoTime();
+				final long heap_write_end_time = System.nanoTime();
+	
+				System.out.println("System - Number of Records Loaded: "+data.size());
+				System.out.println("System - Number of Pages Used: "+page_data.size());
+				System.out.println("System - Time Taken to Execute Script: "+
+				(float)(full_end_time-full_start_time)/1000000000+" seconds");
+				System.out.println("System - Time Taken to Write to Heap: "+ 
+				(heap_write_end_time-heap_write_start_time)/1000000000+" seconds");
 			}
-		
-			//hm.print_hash_map(data);	
-			
-			final long heap_write_start_time = System.nanoTime();
-
-			final long full_end_time = System.nanoTime();
-			final long heap_write_end_time = System.nanoTime();
-
-			System.out.println("System - Number of Records Loaded: "+data.size());
-			System.out.println("System - Number of Pages Used: "+page_data.size());
-			System.out.println("System - Time Taken to Execute Script: "+
-			(float)(full_end_time-full_start_time)/1000000000+" seconds");
-			System.out.println("System - Time Taken to Write to Heap: "+ 
-			(heap_write_end_time-heap_write_start_time)/1000000000+" seconds");
-			
 		}
 	}
 }

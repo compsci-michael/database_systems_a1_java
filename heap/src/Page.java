@@ -27,21 +27,15 @@ public class Page {
 	}
 	
 	// Setters
-	public void inc_num_of_records() {
-		number_of_records_in_page++;
-	}
-	public void set_page_is_full(boolean page_is_full) {
-		this.page_is_full = page_is_full;
-	}
 	public void set_page_size(int page_size) {
 		this.page_size = page_size;
 	}
 	public void set_a_page_slot(Record record) {
 		page_slots[number_of_records_in_page] = new Slot(record);
-		inc_num_of_records();
+		number_of_records_in_page++;
 		// Check if we are at the Limit
 		if(number_of_records_in_page == MAX_RECORDS) {
-			set_page_is_full(true);
+			page_is_full = true;
 		}
 	}
 	
