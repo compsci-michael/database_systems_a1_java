@@ -68,4 +68,16 @@ public class HMethods {
 		}
 		return output;
 	}
+	
+	// Method to Fill a Character Array full of # and Insert the String
+	public char[] char_fill(String s, int size) {
+		char[] result = new char[size];
+		for(int i=0; i<size; i++) {
+			result[i] = '#';
+		}
+		for(int i=0; i<s.length(); i++) {
+			result[i] = s.charAt(i);
+		}
+		return result;
+	}
 }

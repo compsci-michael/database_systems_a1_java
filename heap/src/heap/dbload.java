@@ -1,16 +1,5 @@
 package heap;
 
-// 0: census_yr, 1: block_id, 2: prop_id, 3: base_prop_id, 
-// 4:building_name, 5: stree_address, 6: suburb, 7: construct_yr,
-// 8: refurbished_year, 9: num_floors, 10: space_usage, 11: access_type,
-// 12: access_desc, 13: access_rating, 14: bicycle_spaces,
-// 15: has_showers, 16: x_coor, 17: y_coor, 18:location
-
-// 0: int, 1: int, 2: int, 3: int, 4: VARCHAR(70), 5: VARCHAR(40)
-// 6: VARCHAR(35), 7: int, 8: int, 9: int, 10: VARCHAR(45),
-// 11: VARCHAR(35), 12: VARCHAR(85), 13: int, 14: int, 15: int,
-// 16: double, 17: double, 18: VARCHAR(35)
-
 public class dbload {
 	
 	// Executable Name must be dbload
@@ -20,7 +9,16 @@ public class dbload {
 		boolean correct_input = hm.input_validation(args);
 		if(correct_input) {
 			int page_size = hm.page_size(args);
-			
+			String building_name = "Building Name";
+			String street_address = "Street Address";
+			String suburb = "Suburb";
+			String space_usage = "Space Usage";
+			String access_type = "Access Type";
+			String access_desc = "Access Desc";
+			String location = "(34.32312, -142.03123)";
+
+			Record new_record = new Record(1,1,1,1,building_name, street_address, suburb, 2018, 2001, 2, space_usage, access_type, access_desc, 0, 1800, 1, 34.32312, -142.03123, location);
+			new_record.record_display();
 			// Basic Maths of Records
 			// Fixed: Num of Records per Page = page_size/record_leng
 			// Variable: Use Counter
@@ -28,7 +26,9 @@ public class dbload {
 			// 4096/358 = 11 Records per Page
 			// It is known that there is 220,950 Records
 			// 220,950/11 = 20,087 Pages which is 220,950*358 = 79,100,100 Bytes
-
+			// However, space needs to be left at the end of the page so,
+			// 10 Records per Page = 220,950/10 = 22095 Pages => 22095*4096 = 90,501,120 Bytes
+			
 			
 			// Heap does not need Header (containing things like the #
 			//  of Records in the File or Free Space List)
