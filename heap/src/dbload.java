@@ -1,7 +1,16 @@
+///////////////////////////////////////////////////////////////////////////////
+// File Written by: Michael A (s3662507) (Last Edit: 27/03/2020)
+// Database Systems - Assignment 01
+// Purpose of this Class:
+// This is the Driver Class which contains the Main method
+///////////////////////////////////////////////////////////////////////////////
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -16,7 +25,7 @@ import java.util.Scanner;
 // 10 Records per Page = 220,950/10 = 22095 Pages => 22095*4096 = 90,501,120 Bytes
 
 public class dbload {
-	
+
 	// Executable Name must be dbload
 	// Must be able to execute the following: java dbload -p pagesize datafile
 	public static void main(String[] args) {
@@ -25,7 +34,7 @@ public class dbload {
 		boolean data_read_failed = false;
 		HashMap<String, Record> data = new HashMap<String, Record>();
 		HashMap<String, Page> page_data = new HashMap<String, Page>();
-		
+
 		// Step 1: Validate the Input
 		boolean correct_input = hm.input_validation(args);
 		if(correct_input) {
@@ -124,25 +133,56 @@ public class dbload {
 				/*
 				int page_counter_2 = 1;
 				for (String key : page_data.keySet()) {
-					System.out.println("Page Number: "+page_counter_2++ +" Num Records: "+page_data.get(key).get_number_of_records_in_page());
+					//System.out.println("Page Number: "+page_counter_2++ +" Num Records: "+page_data.get(key).get_number_of_records_in_page());
 					for(int i=0; i<page_data.get(key).number_of_records_in_page; i++) {
 						page_data.get(key).get_page_slot_record(i).record_display_simple();
 					}
 				}
 				*/
-			
 				//hm.print_hash_map(data);	
 				
-				OutputStream binary_out = null;
+				data.clear();
+				// Step 4: Output to the Binary Stream
+				OutputStream heap = null;
 				final long heap_write_start_time = System.nanoTime();
 				
 				try {
-					binary_out = new FileOutputStream("heap."+Integer.toString(page_size));
-					hm.write_to_heap(binary_out);
+					heap = new FileOutputStream("heap."+Integer.toString(page_size));
+					
+					for (String key : page_data.keySet()) {
+						Page temp = page_data.get(key);
+						int padding_length = temp.get_number_of_available_bytes();
+						
+						for(int i=0; i<page_data.get(key).number_of_records_in_page; i++) {
+							heap.write(temp.get_page_slot_record(i).get_census_yr());
+							heap.write(temp.get_page_slot_record(i).get_block_id());
+							heap.write(temp.get_page_slot_record(i).get_prop_id());
+							heap.write(temp.get_page_slot_record(i).get_prop_id());
+							heap.write(temp.get_page_slot_record(i).get_base_prop_id());
+							heap.write(temp.get_page_slot_record(i).get_building_name().toString().getBytes(StandardCharsets.UTF_8));
+							heap.write(temp.get_page_slot_record(i).get_street_address().toString().getBytes(StandardCharsets.UTF_8));
+							heap.write(temp.get_page_slot_record(i).get_suburb().toString().getBytes(StandardCharsets.UTF_8));
+							heap.write(temp.get_page_slot_record(i).get_construct_yr());
+							heap.write(temp.get_page_slot_record(i).get_refurbished_yr());
+							heap.write(temp.get_page_slot_record(i).get_num_floors());
+							heap.write(temp.get_page_slot_record(i).get_space_usage().toString().getBytes(StandardCharsets.UTF_8));
+							heap.write(temp.get_page_slot_record(i).get_access_type().toString().getBytes(StandardCharsets.UTF_8));
+							heap.write(temp.get_page_slot_record(i).get_access_desc().toString().getBytes(StandardCharsets.UTF_8));
+							heap.write(temp.get_page_slot_record(i).get_access_rating());
+							heap.write(Float.floatToIntBits(temp.get_page_slot_record(i).get_x_coor()));
+							heap.write(Float.floatToIntBits(temp.get_page_slot_record(i).get_y_coor()));
+							heap.write(temp.get_page_slot_record(i).get_location().toString().getBytes(StandardCharsets.UTF_8));
+						}
+						System.out.println(padding_length);
+						for(int i=0; i<padding_length;i++) {
+							heap.write("0".getBytes(StandardCharsets.UTF_8));
+						}
+						//heap.write("\n".getBytes(StandardCharsets.UTF_8));
+					}
 					
 					final long full_end_time = System.nanoTime();
 					final long heap_write_end_time = System.nanoTime();
-					
+
 					// Required Outputs
 					System.out.println("System - Number of Records Loaded: "+data.size());
 					System.out.println("System - Number of Pages Used: "+page_data.size());
@@ -154,7 +194,7 @@ public class dbload {
 				} catch (IOException ex) {
 					System.err.println("Error - Could Not Create The Heap File!");
 				}
-			}
+			}			
 		}
 	}
 }

@@ -1,8 +1,16 @@
-import java.io.OutputStream;
+///////////////////////////////////////////////////////////////////////////////
+// File Written by: Michael A (s3662507) (Last Edit: 27/03/2020)
+// Database Systems - Assignment 01
+// Purpose of this Class:
+// This Class is used to hold useful functionalities that can be called upon
+// in the main method
+///////////////////////////////////////////////////////////////////////////////
 import java.util.HashMap;
 
 public class HMethods {
-	// Some Values
+	///////////////////////////////////////////////////////////////////////////
+	/////////////////////////////VALUES////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////
 	public static int P_FLAG = 0;
 	public static int PAGE_SIZE_FLAG = 1;
 	public static int DATA_FLAG = 2;
@@ -123,8 +131,8 @@ public class HMethods {
 			new_record.set_access_rating(Integer.parseInt(data[ACCESS_RATING].trim()));
 			new_record.set_bicycle_spaces(Integer.parseInt(data[BICYCLE_SPACES].trim()));
 			new_record.set_has_showers(Integer.parseInt(data[HAS_SHOWERS].trim()));
-			new_record.set_x_coor(Double.parseDouble(data[X_COOR].trim()));
-			new_record.set_y_coor(Double.parseDouble(data[Y_COOR].trim()));
+			new_record.set_x_coor(Float.parseFloat(data[X_COOR].trim()));
+			new_record.set_y_coor(Float.parseFloat(data[Y_COOR].trim()));
 		} catch(NumberFormatException nfe) {
 			System.err.println("Error - Record Discarded "
 		      		+ "- Record Contained Non-Numerical Value at Line: "+line_number+"! ");
@@ -142,9 +150,5 @@ public class HMethods {
 			new_record.set_location(data[LOCATION]);
 			return new_record;
 		}
-	}
-	
-	public void write_to_heap(OutputStream heap) {
-		
 	}
 }

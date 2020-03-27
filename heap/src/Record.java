@@ -1,3 +1,12 @@
+///////////////////////////////////////////////////////////////////////////////
+// File Written by: Michael A (s3662507) (Last Edit: 27/03/2020)
+// Database Systems - Assignment 01
+// Purpose of this Class:
+// This class was created to store all the Record related data
+// This class is used in conjuction with the Slot and Page classes to create a 
+// heap
+///////////////////////////////////////////////////////////////////////////////
+
 //0: census_yr, 1: block_id, 2: prop_id, 3: base_prop_id, 
 //4:building_name, 5: stree_address, 6: suburb, 7: construct_yr,
 //8: refurbished_year, 9: num_floors, 10: space_usage, 11: access_type,
@@ -10,7 +19,9 @@
 //16: double, 17: double, 18: VARCHAR(35)
 
 public class Record {
-	// Attributes
+	///////////////////////////////////////////////////////////////////////////
+	////////////////ATTRIBUTES (FIELDS IN THE FLAT FILE)///////////////////////
+	///////////////////////////////////////////////////////////////////////////
 	private int census_yr;
 	private int block_id;
 	private int prop_id;
@@ -27,22 +38,26 @@ public class Record {
 	private int access_rating;
 	private int bicycle_spaces;
 	private int has_showers;
-	private double x_coor;
-	private double y_coor;
+	private float x_coor;
+	private float y_coor;
 	private char[] location = new char[35];
-	
-	// Default Constructor
+		
+	///////////////////////////////////////////////////////////////////////////
+	//////////////////////////DEFAULT CONSTRUCTOR//////////////////////////////
+	///////////////////////////////////////////////////////////////////////////
 	public Record() {
 		
 	}
 	
-	// Override Constructor
+	///////////////////////////////////////////////////////////////////////////
+	/////////////////////////OVERRIDE CONSTRUCTOR//////////////////////////////
+	///////////////////////////////////////////////////////////////////////////
 	public Record(int census_yr, int block_id, int prop_id, int base_prop_id,
 			String building_name, String street_address, String suburb,
 			int construct_yr, int refurbished_yr, int num_floors,
 			String space_usage, String access_type, String access_desc,
 			int access_rating, int bicycle_spaces, int has_showers,
-			double x_coor, double y_coor, String location) {
+			float x_coor, float y_coor, String location) {
 		this.census_yr = census_yr;
 		this.block_id = block_id;
 		this.prop_id = prop_id;
@@ -64,6 +79,7 @@ public class Record {
 		this.set_location(location);		
 	}
 	
+	// This Method displays all the details of the Record for Debugging Purposes
 	public void record_display() {
 		System.out.println("Census Year: "+this.get_census_yr());
 		System.out.println("Block ID: "+this.get_block_id());
@@ -84,6 +100,7 @@ public class Record {
 		this.display_char_array(this.get_location(), "Location: ", false);		
 	}
 	
+	// This Method displays unique information of the Record for Debugging
 	public void record_display_simple() {
 		System.out.print("Census Year: "+this.get_census_yr()+", ");
 		System.out.print("Block ID: "+this.get_block_id()+", ");
@@ -96,7 +113,7 @@ public class Record {
 		System.out.println();
 	}	
 	
-	// Method to Display the Character Array
+	// This Method to Display the Character Array in the Record
 	public void display_char_array(char[] str, String display, boolean is_simple) {
 		System.out.print(display);
 		for(int i=0; i<str.length; i++) {
@@ -113,8 +130,9 @@ public class Record {
 		}
 	}
 	
-	
-	// GETTERS
+	///////////////////////////////////////////////////////////////////////////
+	////////////////////////////////GETTERS////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////
 	public int get_census_yr() {
 		return census_yr;
 	}
@@ -163,10 +181,10 @@ public class Record {
 	public int get_has_showers() {
 		return has_showers;
 	}
-	public double get_x_coor() {
+	public float get_x_coor() {
 		return x_coor;
 	}
-	public double get_y_coor() {
+	public float get_y_coor() {
 		return y_coor;
 	}
 	public char[] get_location() {
@@ -174,8 +192,9 @@ public class Record {
 	}
 
 	
-	
-	// SETTERS
+	///////////////////////////////////////////////////////////////////////////
+	////////////////////////////////SETTERS////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////	
 	public void set_census_yr(int census_yr) {
 		this.census_yr = census_yr;
 	}
@@ -230,15 +249,14 @@ public class Record {
 	public void set_has_showers(int has_showers) {
 		this.has_showers = has_showers;
 	}
-	public void set_x_coor(double x_coor) {
+	public void set_x_coor(float x_coor) {
 		this.x_coor = x_coor;
 	}
-	public void set_y_coor(double y_coor) {
+	public void set_y_coor(float y_coor) {
 		this.y_coor = y_coor;
 	}
 	public void set_location(String location) {
 		HMethods hm = new HMethods();
 		this.location = hm.char_fill(location, 35);
 	}
-	
 }
