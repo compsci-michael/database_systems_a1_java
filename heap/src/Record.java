@@ -13,10 +13,10 @@
 //12: access_desc, 13: access_rating, 14: bicycle_spaces,
 //15: has_showers, 16: x_coor, 17: y_coor, 18:location
 
-//0: int, 1: int, 2: int, 3: int, 4: VARCHAR(70), 5: VARCHAR(40)
-//6: VARCHAR(35), 7: int, 8: int, 9: int, 10: VARCHAR(45),
-//11: VARCHAR(35), 12: VARCHAR(85), 13: int, 14: int, 15: int,
-//16: double, 17: double, 18: VARCHAR(35)
+//0: int, 1: int, 2: int, 3: int, 4: VARCHAR(63), 5: VARCHAR(34)
+//6: VARCHAR(28), 7: int, 8: int, 9: int, 10: VARCHAR(39),
+//11: VARCHAR(32), 12: VARCHAR(81), 13: int, 14: int, 15: int,
+//16: double, 17: double, 18: VARCHAR(27)
 
 public class Record {
 	///////////////////////////////////////////////////////////////////////////
@@ -38,8 +38,8 @@ public class Record {
 	private int access_rating;
 	private int bicycle_spaces;
 	private int has_showers;
-	private float x_coor;
-	private float y_coor;
+	private double x_coor;
+	private double y_coor;
 	private char[] location = new char[35];
 		
 	///////////////////////////////////////////////////////////////////////////
@@ -57,7 +57,7 @@ public class Record {
 			int construct_yr, int refurbished_yr, int num_floors,
 			String space_usage, String access_type, String access_desc,
 			int access_rating, int bicycle_spaces, int has_showers,
-			float x_coor, float y_coor, String location) {
+			double x_coor, double y_coor, String location) {
 		this.census_yr = census_yr;
 		this.block_id = block_id;
 		this.prop_id = prop_id;
@@ -95,9 +95,12 @@ public class Record {
 		this.display_char_array(this.get_access_type(), "Access Type: ", false);
 		this.display_char_array(this.get_access_desc(), "Access Description: ", false);
 		System.out.println("Access Rating: "+this.get_access_rating());
+		System.out.println("Bicycle Spaces: "+this.get_bicycle_spaces());
+		System.out.println("Has Showers: "+this.get_has_showers());
 		System.out.println("X Coordinate: "+this.get_x_coor());
 		System.out.println("Y Coordinate: "+this.get_y_coor());
-		this.display_char_array(this.get_location(), "Location: ", false);		
+		this.display_char_array(this.get_location(), "Location: ", false);	
+		System.out.println();
 	}
 	
 	// This Method displays unique information of the Record for Debugging
@@ -181,10 +184,10 @@ public class Record {
 	public int get_has_showers() {
 		return has_showers;
 	}
-	public float get_x_coor() {
+	public double get_x_coor() {
 		return x_coor;
 	}
-	public float get_y_coor() {
+	public double get_y_coor() {
 		return y_coor;
 	}
 	public char[] get_location() {
@@ -209,15 +212,15 @@ public class Record {
 	}
 	public void set_building_name(String building_name) {
 		HMethods hm = new HMethods();
-		this.building_name = hm.char_fill(building_name, 70);
+		this.building_name = hm.char_fill(building_name, 63);
 	}
 	public void set_street_address(String street_address) {
 		HMethods hm = new HMethods();
-		this.street_address = hm.char_fill(street_address, 40);
+		this.street_address = hm.char_fill(street_address, 34);
 	}
 	public void set_suburb(String suburb) {
 		HMethods hm = new HMethods();
-		this.suburb = hm.char_fill(suburb, 35);
+		this.suburb = hm.char_fill(suburb, 28);
 	}
 	public void set_construct_yr(int construct_yr) {
 		this.construct_yr = construct_yr;
@@ -230,15 +233,15 @@ public class Record {
 	}
 	public void set_space_usage(String space_usage) {
 		HMethods hm = new HMethods();
-		this.space_usage = hm.char_fill(space_usage, 45);
+		this.space_usage = hm.char_fill(space_usage, 39);
 	}
 	public void set_access_type(String access_type) {
 		HMethods hm = new HMethods();
-		this.access_type = hm.char_fill(access_type, 35);
+		this.access_type = hm.char_fill(access_type, 32);
 	}
 	public void set_access_desc(String access_desc) {
 		HMethods hm = new HMethods();
-		this.access_desc = hm.char_fill(access_desc, 85);
+		this.access_desc = hm.char_fill(access_desc, 81);
 	}
 	public void set_access_rating(int access_rating) {
 		this.access_rating = access_rating;
@@ -249,14 +252,77 @@ public class Record {
 	public void set_has_showers(int has_showers) {
 		this.has_showers = has_showers;
 	}
-	public void set_x_coor(float x_coor) {
+	public void set_x_coor(double x_coor) {
 		this.x_coor = x_coor;
 	}
-	public void set_y_coor(float y_coor) {
+	public void set_y_coor(double y_coor) {
 		this.y_coor = y_coor;
 	}
 	public void set_location(String location) {
 		HMethods hm = new HMethods();
-		this.location = hm.char_fill(location, 35);
+		this.location = hm.char_fill(location, 27);
+	}
+	
+	// Method for Searching for a String in the Record
+	public boolean contains(String sc) {
+		if(Integer.toString(this.census_yr).contains(sc)) {
+			return true;
+		}
+		if(Integer.toString(this.block_id).contains(sc)) {
+			return true;
+		}
+		if(Integer.toString(this.prop_id).contains(sc)) {
+			return true;
+		}
+		if(Integer.toString(this.base_prop_id).contains(sc)) {
+			return true;
+		}
+		if(new String(this.building_name).toLowerCase().contains(sc)) {
+			return true;
+		}
+		if(new String(this.street_address).toLowerCase().contains(sc)) {
+			return true;
+		}
+		if(new String(this.suburb).toLowerCase().contains(sc)) {
+			return true;
+		}
+		if(Integer.toString(this.construct_yr).contains(sc)) {
+			return true;
+		}
+		if(Integer.toString(this.refurbished_yr).contains(sc)) {
+			return true;
+		}
+		if(Integer.toString(this.num_floors).contains(sc)) {
+			return true;
+		}
+		if(new String(this.space_usage).toLowerCase().contains(sc)) {
+			return true;
+		}
+		if(new String(this.access_type).toLowerCase().contains(sc)) {
+			return true;
+		}
+		if(new String(this.access_desc).toLowerCase().contains(sc)) {
+			return true;
+		}
+		if(Integer.toString(this.access_rating).contains(sc)) {
+			return true;
+		}
+		if(Integer.toString(this.bicycle_spaces).contains(sc)) {
+			return true;
+		}
+		if(Integer.toString(this.has_showers).contains(sc)) {
+			return true;
+		}
+		if(Double.toString(this.x_coor).contains(sc)) {
+			return true;
+		}
+		if(Double.toString(this.y_coor).contains(sc)) {
+			return true;
+		}
+		if(new String(this.location).toLowerCase().contains(sc)) {
+			return true;
+		}
+		
+		return false;
 	}
 }

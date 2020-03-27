@@ -9,7 +9,7 @@ public class Page {
 	///////////////////////////////////////////////////////////////////////////
 	////////////////////////////////MEMBERS////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
-	public static int FIXED_RECORD_LENGTH = 358;
+	public static int FIXED_RECORD_LENGTH = 360;
 	int number_of_records_in_page;
 	int num_of_slots;
 	boolean page_is_full;
@@ -64,12 +64,9 @@ public class Page {
 	
 	 @Override
      public boolean equals(Object o) {
-         if (this == o) {
-             return true;
-         }
-         if (o == null || getClass() != o.getClass()) {
-             return false;
-         }
+         if (this == o) return true;
+         if (o == null || getClass() != o.getClass()) return false;
+         
          Page page = (Page) o;
          return page_slots == page.page_slots;
      }
