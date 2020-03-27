@@ -277,13 +277,13 @@ public class Record {
 		if(Integer.toString(this.base_prop_id).contains(sc)) {
 			return true;
 		}
-		if(new String(this.building_name).toLowerCase().contains(sc)) {
+		if(new String(this.building_name).toLowerCase().contains(sc.toLowerCase())) {
 			return true;
 		}
-		if(new String(this.street_address).toLowerCase().contains(sc)) {
+		if(new String(this.street_address).toLowerCase().contains(sc.toLowerCase())) {
 			return true;
 		}
-		if(new String(this.suburb).toLowerCase().contains(sc)) {
+		if(new String(this.suburb).toLowerCase().contains(sc.toLowerCase())) {
 			return true;
 		}
 		if(Integer.toString(this.construct_yr).contains(sc)) {
@@ -295,13 +295,13 @@ public class Record {
 		if(Integer.toString(this.num_floors).contains(sc)) {
 			return true;
 		}
-		if(new String(this.space_usage).toLowerCase().contains(sc)) {
+		if(new String(this.space_usage).toLowerCase().contains(sc.toLowerCase())) {
 			return true;
 		}
-		if(new String(this.access_type).toLowerCase().contains(sc)) {
+		if(new String(this.access_type).toLowerCase().contains(sc.toLowerCase())) {
 			return true;
 		}
-		if(new String(this.access_desc).toLowerCase().contains(sc)) {
+		if(new String(this.access_desc).toLowerCase().contains(sc.toLowerCase())) {
 			return true;
 		}
 		if(Integer.toString(this.access_rating).contains(sc)) {
