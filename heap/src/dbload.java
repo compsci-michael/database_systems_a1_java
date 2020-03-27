@@ -33,6 +33,7 @@ public class dbload {
 		HMethods hm = new HMethods();
 		boolean data_read_failed = false;
 		HashMap<String, Record> data = new HashMap<String, Record>();
+		int data_size = 0;
 		HashMap<String, Page> page_data = new HashMap<String, Page>();
 
 		// Step 1: Validate the Input
@@ -141,6 +142,8 @@ public class dbload {
 				*/
 				//hm.print_hash_map(data);	
 				
+				// Delete the Record HashMap for Space :)
+				data_size = data.size();
 				data.clear();
 				// Step 4: Output to the Binary Stream
 				DataOutputStream heap_file_writer = null;
@@ -187,7 +190,7 @@ public class dbload {
 					final long heap_write_end_time = System.nanoTime();
 					
 					// Required Outputs
-					System.out.println("System - Number of Records Loaded: "+data.size());
+					System.out.println("System - Number of Records Loaded: "+data_size);
 					System.out.println("System - Number of Pages Used: "+page_data.size());
 					System.out.println("System - Time Taken to Execute Script: "+
 					(float)(full_end_time-full_start_time)/1000000000+" seconds");
