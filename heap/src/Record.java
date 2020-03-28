@@ -26,21 +26,21 @@ public class Record {
 	private int block_id;
 	private int prop_id;
 	private int base_prop_id;
-	private char[] building_name = new char[70];
-	private char[] street_address = new char[40];
-	private char[] suburb = new char[35];
+	private char[] building_name = new char[63];
+	private char[] street_address = new char[34];
+	private char[] suburb = new char[28];
 	private int construct_yr;
 	private int refurbished_yr;
 	private int num_floors;
-	private char[] space_usage = new char[45];
-	private char[] access_type = new char[35];
-	private char[] access_desc = new char[85];
+	private char[] space_usage = new char[39];
+	private char[] access_type = new char[32];
+	private char[] access_desc = new char[81];
 	private int access_rating;
 	private int bicycle_spaces;
 	private int has_showers;
 	private double x_coor;
 	private double y_coor;
-	private char[] location = new char[35];
+	private char[] location = new char[27];
 		
 	///////////////////////////////////////////////////////////////////////////
 	//////////////////////////DEFAULT CONSTRUCTOR//////////////////////////////
