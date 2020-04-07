@@ -265,64 +265,12 @@ public class Record {
 	
 	// Method for Searching for a String in the Record
 	public boolean contains(String sc) {
-		if(Integer.toString(this.census_yr).contains(sc)) {
-			return true;
-		}
-		if(Integer.toString(this.block_id).contains(sc)) {
-			return true;
-		}
-		if(Integer.toString(this.prop_id).contains(sc)) {
-			return true;
-		}
-		if(Integer.toString(this.base_prop_id).contains(sc)) {
-			return true;
+		if(sc.equals("#")) {
+			sc = "###############################################################";
 		}
 		if(new String(this.building_name).toLowerCase().contains(sc.toLowerCase())) {
 			return true;
 		}
-		if(new String(this.street_address).toLowerCase().contains(sc.toLowerCase())) {
-			return true;
-		}
-		if(new String(this.suburb).toLowerCase().contains(sc.toLowerCase())) {
-			return true;
-		}
-		if(Integer.toString(this.construct_yr).contains(sc)) {
-			return true;
-		}
-		if(Integer.toString(this.refurbished_yr).contains(sc)) {
-			return true;
-		}
-		if(Integer.toString(this.num_floors).contains(sc)) {
-			return true;
-		}
-		if(new String(this.space_usage).toLowerCase().contains(sc.toLowerCase())) {
-			return true;
-		}
-		if(new String(this.access_type).toLowerCase().contains(sc.toLowerCase())) {
-			return true;
-		}
-		if(new String(this.access_desc).toLowerCase().contains(sc.toLowerCase())) {
-			return true;
-		}
-		if(Integer.toString(this.access_rating).contains(sc)) {
-			return true;
-		}
-		if(Integer.toString(this.bicycle_spaces).contains(sc)) {
-			return true;
-		}
-		if(Integer.toString(this.has_showers).contains(sc)) {
-			return true;
-		}
-		if(Double.toString(this.x_coor).contains(sc)) {
-			return true;
-		}
-		if(Double.toString(this.y_coor).contains(sc)) {
-			return true;
-		}
-		if(new String(this.location).toLowerCase().contains(sc)) {
-			return true;
-		}
-		
 		return false;
 	}
 }
